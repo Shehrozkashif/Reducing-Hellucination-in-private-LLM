@@ -1,0 +1,11 @@
+spacy==3.7.2
+py2neo
+fastapi
+uvicorn
+transformers
+torch
+stanza
+pydantic
+scikit-learn
+jupyter
+

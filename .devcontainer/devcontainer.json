@@ -1,0 +1,15 @@
+{
+  "name": "Private LLM Dev",
+  "context": "..",
+  "dockerFile": "Dockerfile",
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash"
+  },
+  "extensions": [
+    "ms-python.python",
+    "ms-toolsai.jupyter"
+  ],
+  "forwardPorts": [8501, 7860],
+  "postCreateCommand": "pip install -r requirements.txt"
+}
+
