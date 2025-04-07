@@ -1,6 +1,12 @@
 
 import re
 import PyPDF2
+import spacy
+from spacy.tokens import DocBin
+from tqdm import tqdm
+import json
+from spacy import displacy
+import stanza
 
 def clean_text(text):
     # Remove unwanted characters
@@ -31,7 +37,7 @@ print(cleaned_text)
 
 
 
-import spacy
+
 
 nlp = spacy.load("en_core_web_sm")
 
@@ -52,10 +58,7 @@ print(extract_entities(cleaned_text))
 
 
 
-import spacy
-from spacy.tokens import DocBin
-from tqdm import tqdm
-import json
+
 
 # Load a new blank spaCy model
 nlp = spacy.blank("en")
@@ -94,8 +97,8 @@ spacy.displacy.render(doc, style="ent", jupyter=True)  # display in Jupyter
 
 
 
-import spacy
-from spacy import displacy
+
+
 
 nlp = spacy.load("en_core_web_sm")
 
@@ -108,10 +111,6 @@ for i in sentence:
       print("{:<15} {:^10} {:>15}".format(str(token.head.text), str(token.dep_), str(token.text)))
   displacy.render(doc, style='dep')
 
-
-
-
-import stanza
 stanza.download('en')
 nlp = stanza.Pipeline(lang='en', processors='tokenize,mwt,pos,lemma,depparse')
 
