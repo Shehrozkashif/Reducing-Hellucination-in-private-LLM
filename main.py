@@ -1,123 +1,90 @@
-
 import re
+import json
+import os
 import PyPDF2
 import spacy
 from spacy.tokens import DocBin
 from tqdm import tqdm
-import json
 from spacy import displacy
 import stanza
+import networkx as nx
+import matplotlib.pyplot as plt
+from pyvis.network import Network
 
+# === Step 1: Clean PDF Text ===
 def clean_text(text):
-    # Remove unwanted characters
-    text = re.sub(r'\s+', ' ', text)  # Replace multiple spaces with a single space
-    text = re.sub(r'\n', ' ', text)  # Remove newline characters
-    text = re.sub(r'[^A-Za-z0-9\s.,;!?]', '', text)  # Remove special characters
+    text = re.sub(r'\s+', ' ', text)
+    text = re.sub(r'\n', ' ', text)
+    text = re.sub(r'[^A-Za-z0-9\s.,;!?]', '', text)
     return text
 
 def read_pdf(file_path):
-    # Open the PDF file
     with open(file_path, 'rb') as file:
         reader = PyPDF2.PdfReader(file)
+        text = ''.join(page.extract_text() for page in reader.pages if page.extract_text())
+    return clean_text(text)
 
-        # Extract text from each page
-        text = ''
-        for page in reader.pages:
-            text += page.extract_text()
-
-    # Clean the extracted text
-    cleaned_text = clean_text(text)
-
-    return cleaned_text
-
-# Example usage
-file_path = 'C1-Annex-2.pdf'  # Replace with your PDF file path
+# === Step 2: Load and Preprocess PDF ===
+file_path = 'data/raw/C1-Annex-2.pdf'  # Change this if needed
 cleaned_text = read_pdf(file_path)
-print(cleaned_text)
 
+print("\n--- Cleaned Text ---\n", cleaned_text[:1000])  # Show only first 1000 characters
 
+# === Step 3: Load spaCy NLP model ===
+nlp_spacy = spacy.load("en_core_web_sm")
+doc = nlp_spacy(cleaned_text)
 
+# === Step 4: Extract Named Entities ===
+def extract_entities(doc):
+    return [(ent.text, ent.label_) for ent in doc.ents]
 
+print("\n--- Named Entities ---\n", extract_entities(doc))
 
-nlp = spacy.load("en_core_web_sm")
+# === Step 5: Extract SPO Triplets ===
+def extract_knowledge_triplets(doc):
+    triplets = []
+    for sent in doc.sents:
+        for token in sent:
+            if token.dep_ in ('nsubj', 'nsubjpass') and token.head.pos_ == 'VERB':
+                subject = token.text
+                verb = token.head.text
+                for child in token.head.children:
+                    if child.dep_ in ('dobj', 'pobj', 'attr', 'dative', 'oprd'):
+                        obj = child.text
+                        triplets.append((subject, verb, obj))
+    return triplets
 
-def tokenize_text(text):
-    doc = nlp(text)
-    tokens = [token.text.lower() for token in doc if not token.is_stop and not token.is_punct]
-    return tokens
-print(tokenize_text(cleaned_text))
+triplets = extract_knowledge_triplets(doc)
 
+print("\n--- Extracted Triplets ---")
+for t in triplets:
+    print(t)
 
+# === Step 6: Build Knowledge Graph ===
+G = nx.DiGraph()
 
-def extract_entities(text):
-    doc = nlp(text)
-    entities = [(ent.text, ent.label_) for ent in doc.ents]
-    return entities
+for sub, rel, obj in triplets:
+    G.add_node(sub)
+    G.add_node(obj)
+    G.add_edge(sub, obj, label=rel)
 
-print(extract_entities(cleaned_text))
+# === Step 7: Visualize Graph with matplotlib ===
+pos = nx.spring_layout(G, k=0.5)
+plt.figure(figsize=(15, 10))
+nx.draw(G, pos, with_labels=True, node_size=2000, node_color='skyblue', font_size=10, edge_color='gray')
+edge_labels = nx.get_edge_attributes(G, 'label')
+nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_color='red')
+plt.title("Knowledge Graph from PDF")
+plt.tight_layout()
+plt.show()
 
+# === Step 8: Interactive Graph with pyvis ===
+net = Network(notebook=False, height="700px", width="100%")
 
+for sub, rel, obj in triplets:
+    net.add_node(sub, label=sub)
+    net.add_node(obj, label=obj)
+    net.add_edge(sub, obj, label=rel)
 
-
-
-# Load a new blank spaCy model
-nlp = spacy.blank("en")
-
-# Create a DocBin object
-db = DocBin()
-
-# Load training data from JSON file
-f = open('annotations.json')
-TRAIN_DATA = json.load(f)
-
-# Process training data and convert it to spaCy format
-for text, annot in tqdm(TRAIN_DATA['annotations']):
-    doc = nlp.make_doc(text)
-    ents = []
-    for start, end, label in annot["entities"]:
-        span = doc.char_span(start, end, label=label, alignment_mode="contract")
-        if span is None:
-            print("Skipping entity")
-        else:
-            ents.append(span)
-    doc.ents = ents
-    db.add(doc)
-
-# Save the processed data as a spaCy binary file
-db.to_disk("./pvr_training_data.spacy")
-
-
-
-nlp_nor = spacy.load("./model-best/model-best") # Include "model-best" folder within the path.
-doc = nlp_nor(cleaned_text)  # Input sample text
-
-
-spacy.displacy.render(doc, style="ent", jupyter=True)  # display in Jupyter
-
-
-
-
-
-
-
-nlp = spacy.load("en_core_web_sm")
-
-# Assuming 'cleaned_text' is the variable holding the output of read_pdf function
-sentence = cleaned_text.split('.')
-for i in sentence:
-  doc = nlp(i)
-  print(f"{'Node (from)-->':<15} {'Relation':^10} {'-->Node (to)':>15}\n")
-  for token in doc:
-      print("{:<15} {:^10} {:>15}".format(str(token.head.text), str(token.dep_), str(token.text)))
-  displacy.render(doc, style='dep')
-
-stanza.download('en')
-nlp = stanza.Pipeline(lang='en', processors='tokenize,mwt,pos,lemma,depparse')
-
-# Call the clean_text function and pass its output to the pipeline
-# The variable name was incorrect. Changed 'clean_text' to 'cleaned_text'
-doc = nlp(cleaned_text)  # Assuming 'cleaned_text' is the variable containing the raw text
-
-for sent in doc.sentences:
-    for word in sent.words:
-        print(f'id:{word.id}\nword: {word.text}\nhead id: {word.head}\nhead: {sent.words[word.head-1].text if word.head > 0 else "root"}\tdeprel: {word.deprel} \n --------------\n', sep='.')
+net.show("knowledge_graph.html")
+print("\n✅ Interactive graph saved as 'knowledge_graph.html'")
