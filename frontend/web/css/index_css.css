@@ -1,0 +1,142 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  p{
+    /* text-align: justify; */
+  }
+  .homepage {
+    font-family: 'Inter', 'SF Pro Display', 'Helvetica Neue', 'Segoe UI', sans-serif;
+    background: linear-gradient(to bottom right, #64278e 0%,black 30%, #64278e 100%);
+    color: white;
+    min-height: 100vh;
+    text-align: center;
+
+  }
+  .hero{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    
+  }
+  .Data_entry{
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to top right, #15174d 50%, #a9aad6 100%);
+    color: white;
+    min-height: 100vh;
+  }
+  .navbar {
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+    padding: 30px 80px 0px 80px;
+    /* flex-direction: row ; */
+  }
+  ol{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .navbar_menu{
+    /* margin:0px 45px; */
+    list-style: none;
+  }
+  .navbar .logo img {
+    width: 50px;
+  }
+  
+  .nav-links a {
+    color: white;
+    text-decoration: none;
+    margin: 0 20px;
+    font-size: 16px;
+  }
+  
+  .cta-button .btn-primary {
+    /* background: linear-gradient(90deg, #00C9FF, #92FE9D); */
+    padding: 10px 20px;
+    border-radius: 25px;
+    color: #000;
+    font-weight: bold;
+    text-decoration: none;
+    transition: 0.3s;
+  }
+  
+  .cta-button .btn-primary:hover {
+    opacity: 0.8;
+  }
+  
+  /* .hero {
+    display: flex;
+    align-items: center;
+    /* justify-content: space-between; */
+    /* padding: 100px 80px; */
+ 
+    
+  /* .hero-content {
+    max-width: 50%;
+  } */
+ 
+  .hero-content h1 {
+    font-size: 48px;
+    line-height: 1.2;
+    margin-bottom: 30px;
+  }
+ .hero-content{
+width: 50%;
+ }
+ .subtext{
+  margin-bottom: 50px;
+ }
+  /* .hero-content .subtext {
+    font-size: 16px;
+    color: #ccc;
+    margin-bottom: 40px;
+  } */
+  
+  .hero-buttons a {
+    text-decoration: none;
+    margin-right: 20px;
+  }
+  
+  .btn-p {
+    background: white;
+    padding: 15px 40px;
+    border-radius: 30px;
+    color: #000;
+    font-weight: 600;
+    transition: 0.3s;
+  }
+  
+  .btn-p:hover {
+    opacity: 0.9;
+  }
+  .get_started{
+    border: 1px solid white;
+    border-radius: 30px;
+    padding: 8px 25px;
+
+  }
+  a{
+    text-decoration: none;
+  }
+  
+  /* Hero Image */
+  .hero-image {
+    position: relative;
+    width: 40%;
+  }
+  
+  .hero-image img {
+    width: 100%;
+    max-width: 400px;
+  }
+  header.navbar {
+    position: fixed;
+    /* background: rgba(255, 255, 255, 0.349); */
+    width: 104vw;
+    z-index: 10;
+}
