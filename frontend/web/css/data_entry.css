@@ -1,0 +1,137 @@
+:root {
+    --font-family: 'Poppins', sans-serif;
+    --bg-start: #000000;   
+    --bg-end: #64278e;     
+    --form-bg: rgba(255, 255, 255, 0.15);
+    --input-bg: #f5f5f5;
+    --accent: #6c63ff;
+    --button-start: #ffffff;
+    --button-end: #b9b9b9;
+    --text-light: #ffffff;
+    --text-dark: #333333;
+    --radius: 10px;
+    --transition: 0.3s ease;
+  }
+  
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: var(--font-family);
+    background: linear-gradient(to top right, var(--bg-start), var(--bg-end));
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .container {
+    width: 100%;
+    max-width: 500px;
+  }
+  
+  .config-form {
+    background: var(--form-bg);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 40px 30px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .config-form h1 {
+    margin-bottom: 30px;
+    font-size: 28px;
+    text-align: center;
+    color: var(--text-light);
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    margin-bottom: 8px;
+    font-size: 16px;
+    color: var(--text-light);
+  }
+  
+  .form-group input[type="text"],
+  .form-group input[type="number"],
+  .form-group input[type="file"],
+  .form-group select {
+    padding: 12px 15px;
+    border: none;
+    border-radius: var(--radius);
+    background-color: var(--input-bg);
+    color: var(--text-dark);
+    font-size: 14px;
+    outline: none;
+    transition: box-shadow var(--transition);
+  }
+  
+  .form-group input:focus,
+  .form-group select:focus {
+    box-shadow: 0 0 0 3px var(--accent);
+  }
+  
+  .form-group select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+  
+  button[type="submit"] {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--text-dark);
+    background: linear-gradient(to bottom, var(--button-start), var(--button-end));
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: opacity var(--transition), transform var(--transition);
+  }
+  
+  button[type="submit"]:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+  }
+  
+  @media (max-width: 480px) {
+    .config-form {
+      padding: 30px 20px;
+    }
+  }
+  
+  .loading-container {
+    margin-top: 20px;
+    width: 100%;
+    height: 20px;
+    background: #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .loading-bar {
+    height: 100%;
+    width: 0%;
+    background: #64278e;
+    animation: load 5s linear forwards;
+  }
+  
+  @keyframes load {
+    0% { width: 0%; }
+    100% { width: 100%; }
+  }
+  
+  .hidden {
+    display: none;
+  }
+  

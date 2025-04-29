@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Train Your Model</title>
+  <link rel="stylesheet" href="../web/css/data_entry.css" />
+</head>
+<body>
+
+  <div class="container">
+    <form class="config-form" id="trainForm">
+      <h1>Train Your Model</h1>
+
+      <div class="form-group">
+        <label>Select LLM Path</label>
+        <input type="text" placeholder="LLM Path" required />
+      </div>
+
+      <div class="form-group">
+        <label>GPU Layers</label>
+        <input type="number" placeholder="Enter number of GPU layers" required />
+      </div>
+
+      <div class="form-group">
+        <label>Context Length</label>
+        <input type="number" placeholder="Enter context length" required />
+      </div>
+
+      <div class="form-group">
+        <label>Upload Dataset</label>
+        <input type="file" required />
+      </div>
+
+      <div class="form-group">
+        <label>Select AI Model</label>
+        <select required>
+          <option value="">Choose a model</option>
+          <option value="deepseek">DeepSeek</option>
+          <option value="mistral">Mistral 7B</option>
+          <option value="llama">LLaMA 2</option>
+          <option value="openchat">OpenChat</option>
+          <option value="falcon">Falcon</option>
+        </select>
+      </div>
+
+      <button type="submit">Train</button>
+
+      <div id="loadingBar" class="loading-container hidden">
+        <div class="loading-bar"></div>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('trainForm');
+    const loadingBar = document.getElementById('loadingBar');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      loadingBar.classList.remove('hidden');
+
+    
+      setTimeout(() => {
+        loadingBar.classList.add('hidden');
+        alert('Training complete!');
+      }, 5000);
+    });
+  </script>
+
+</body>
+</html>
