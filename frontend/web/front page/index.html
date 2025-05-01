@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Personal Intelligence Platform</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Your Personal Intelligence Platform</h1>
+    </div>
+    
+    <div class="chat-container" id="chatContainer">
+        <div class="message ai-message">
+            <p>Hello! I'm your personal AI assistant. How can I help you today?</p>
+            <div class="feedback-buttons">
+                <button class="feedback-button" title="Like">👍</button>
+                <button class="feedback-button" title="Dislike">👎</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="typing-indicator" id="typingIndicator">
+        <div class="typing-dots">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+        </div>
+    </div>
+    
+    <div class="input-area">
+        <div class="input-container">
+            <textarea class="input-field" id="userInput" placeholder="Type your message here..." rows="1"></textarea>
+            <button class="send-button" id="sendButton">Send</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
