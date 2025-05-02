@@ -7,7 +7,8 @@
   <title>AI Intelligence Platform</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <link rel="stylesheet" href="css/index_css.css">
+  <link rel="stylesheet" href="css/index_css.css">  <link rel="stylesheet" href="../web/css/data_entry.css" />
+
 </head>
 
 <body>
@@ -18,13 +19,13 @@
       </div>
       <nav class="nav-links">
         <ol>
-        <li class="navbar_menu"><a href="#">Sign up</a></li>
-        <li class="navbar_menu"><a href="#">Login</a></li>
-        <li class="navbar_menu"><a href="#">Setting</a></li>
+        <!-- <li class="navbar_menu"><a href="">Chat</a></li> -->
+        <li class="navbar_menu"><a href="login.html">Login</a></li>
+        <li class="navbar_menu"><a href="forgotPW.html">Forget Password</a></li>
       </ol>
       </nav>
       <div class="cta-button">
-        <a href="#" style="color: white;" class="get_started">Get Started</a>
+        <a href="front page/index.html" style="color: white;" class="get_started">Get Started</a>
       </div>
     </header>
 
@@ -43,6 +44,70 @@
         <img src="images/img1.png" alt="Robot Illustration">
       </div> -->
     </section>
+  </div>
+
+  <div class="data_en">
+
+    
+  <div class="container">
+    <form class="config-form" id="trainForm">
+      <h1>Train Your Model</h1>
+
+      <div class="form-group">
+        <label>Select LLM Path</label>
+        <input type="text" placeholder="LLM Path" required />
+      </div>
+
+      <div class="form-group">
+        <label>GPU Layers</label>
+        <input type="number" placeholder="Enter number of GPU layers" required />
+      </div>
+
+      <div class="form-group">
+        <label>Context Length</label>
+        <input type="number" placeholder="Enter context length" required />
+      </div>
+
+      <div class="form-group">
+        <label>Upload Dataset</label>
+        <input type="file" required />
+      </div>
+
+      <div class="form-group">
+        <label>Select AI Model</label>
+        <select required>
+          <option value="">Choose a model</option>
+          <option value="deepseek">DeepSeek</option>
+          <option value="mistral">Mistral 7B</option>
+          <option value="llama">LLaMA 2</option>
+          <option value="openchat">OpenChat</option>
+          <option value="falcon">Falcon</option>
+        </select>
+      </div>
+
+      <button type="submit">Train</button>
+
+      <div id="loadingBar" class="loading-container hidden">
+        <div class="loading-bar"></div>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('trainForm');
+    const loadingBar = document.getElementById('loadingBar');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      loadingBar.classList.remove('hidden');
+
+    
+      setTimeout(() => {
+        loadingBar.classList.add('hidden');
+        alert('Training complete!');
+      }, 5000);
+    });
+  </script>
   </div>
 </body>
 

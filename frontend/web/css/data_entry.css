@@ -21,19 +21,25 @@
   
   body {
     font-family: var(--font-family);
-    background: linear-gradient(to top right, var(--bg-start), var(--bg-end));
-    min-height: 100vh;
-    display: flex;
+    /* background: linear-gradient(to top right, var(--bg-start), var(--bg-end));
+    min-height: 100vh; */
+    /* display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 20px;
+    justify-content: center; */
+    /* padding: 20px; */
   }
   
   .container {
     width: 100%;
     max-width: 500px;
   }
-  
+  .data_en{
+        background: linear-gradient(to top right, var(--bg-start), var(--bg-end));
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   .config-form {
     background: var(--form-bg);
     backdrop-filter: blur(10px);
